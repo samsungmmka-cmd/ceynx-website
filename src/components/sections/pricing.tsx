@@ -27,15 +27,14 @@ const plans = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="bg-secondary py-24 sm:py-28">
+    <section id="pricing" tabIndex={-1} className="bg-secondary py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">Plans that grow with your team</h2>
         <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-          Early-access customers get launch pricing. WhatsApp&apos;s own message fees are billed by Meta directly to
-          your business, with no markup from us.
+          Launch pricing for early access. Meta bills WhatsApp fees directly, with no markup.
         </p>
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {plans.map((p) => (
             <div
               key={p.name}

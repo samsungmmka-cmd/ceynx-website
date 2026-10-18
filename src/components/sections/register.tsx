@@ -80,18 +80,20 @@ export function Register() {
   const aria = (k: string) => ({ "aria-invalid": !!errors[k] || undefined, "aria-describedby": errors[k] ? `e-${k}` : undefined });
 
   return (
-    <section id="register" className="lagoon-field py-24 text-white sm:py-28">
+    <section id="register" tabIndex={-1} className="lagoon-field py-16 text-white sm:py-20">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Get early access to CEYNX</h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-white/75">
-            Register your business and we&apos;ll set up your workspace, then email you a private link to sign in.
-            Early-access workspaces get launch pricing and CEYNX AI first.
+            Register and we&apos;ll email your private workspace link.
           </p>
           <ul className="mt-8 space-y-3 text-white/80">
-            <li>We reply within one business day.</li>
-            <li>No credit card needed to register.</li>
-            <li>We use your details only to contact you about CEYNX.</li>
+            {["Reply within one business day", "No credit card", "Launch pricing and CEYNX AI first"].map((t) => (
+              <li key={t} className="flex items-center gap-2.5">
+                <CheckCircle2 aria-hidden className="size-5 text-signal" />
+                {t}
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -192,8 +194,8 @@ export function Register() {
                   />
                   <span>
                     I agree that CEYNX may contact me by email and WhatsApp about my registration. See the{" "}
-                    <a href="/privacy" className="text-teal underline underline-offset-4">
-                      privacy policy
+                    <a href="/privacy" target="_blank" rel="noopener" className="text-teal underline underline-offset-4">
+                      privacy policy<span className="sr-only"> (opens in a new tab)</span>
                     </a>
                     .
                   </span>

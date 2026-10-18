@@ -2,22 +2,49 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { nav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+/** Move keyboard focus to the section a hash link points at, without scrolling again. */
+function focusHashTarget() {
+  const id = decodeURIComponent(window.location.hash.slice(1));
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+  el.focus({ preventScroll: true });
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("hashchange", focusHashTarget);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("hashchange", focusHashTarget);
+    };
   }, []);
+
+  // The logo always returns to the hero. On the home page Next.js treats a link to "/" as a no-op,
+  // so scroll there ourselves and drop any #section from the address bar.
+  function goHome(e: React.MouseEvent) {
+    setOpen(false);
+    if (pathname !== "/") return;
+    e.preventDefault();
+    history.replaceState(null, "", "/");
+    window.scrollTo({ top: 0 });
+    document.getElementById("main")?.focus({ preventScroll: true });
+  }
 
   return (
     <header
@@ -27,7 +54,7 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" aria-label="CEYNX home" className="rounded-md">
+        <Link href="/" aria-label="CEYNX home" className="rounded-md" onClick={goHome}>
           <Logo light />
         </Link>
 

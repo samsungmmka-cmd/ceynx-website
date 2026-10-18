@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <SiteHeader />
-      <main id="main">
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <ProductTour />
         <AiSection />

@@ -4,16 +4,15 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="lagoon-field relative overflow-hidden pt-28 pb-20 text-white sm:pt-32 lg:pb-28">
+    <section className="lagoon-field relative overflow-hidden pt-24 pb-16 text-white sm:pt-28 lg:pb-20">
       <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]">
         <div>
           <h1 className="text-[2.6rem] leading-[1.02] font-bold tracking-[-0.02em] sm:text-6xl lg:text-[3.6rem]">
             Say what you want sent. CEYNX handles the WhatsApp part.
           </h1>
           <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-white/75">
-            One shared inbox, campaigns, automations and WhatsApp Flows on the official WhatsApp Business Platform. Type
-            an instruction in plain words and get a plan that already respects consent, approved templates and
-            WhatsApp&apos;s 24-hour reply window.
+            Type what you need. CEYNX plans it, checks consent and sends it on the official WhatsApp Business
+            Platform.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Button size="lg" asChild>

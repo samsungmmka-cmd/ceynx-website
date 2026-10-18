@@ -20,9 +20,9 @@ export function SiteFooter() {
             <ul className="space-y-2.5">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <a href={`/${n.href}`} className="hover:text-white">
+                  <Link href={`/${n.href}`} className="hover:text-white">
                     {n.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -30,7 +30,7 @@ export function SiteFooter() {
           <ul className="space-y-2.5">
             <li><Link href="/privacy" className="hover:text-white">Privacy policy</Link></li>
             <li><Link href="/terms" className="hover:text-white">Terms of service</Link></li>
-            <li><a href="/#register" className="hover:text-white">Register</a></li>
+            <li><Link href="/#register" className="hover:text-white">Register</Link></li>
           </ul>
         </div>
       </div>

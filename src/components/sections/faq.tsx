@@ -29,7 +29,7 @@ const faqs = [
 
 export function Faq() {
   return (
-    <section id="faq" className="py-24 sm:py-28">
+    <section id="faq" tabIndex={-1} className="py-16 sm:py-20">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr]">
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Questions businesses ask us</h2>
         <Accordion type="single" collapsible className="border-t">

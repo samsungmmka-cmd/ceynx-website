@@ -164,12 +164,12 @@ export function AiComposer() {
           </div>
         </div>
 
-        <p className="mt-4 min-h-[3.25rem] rounded-xl bg-black/25 px-4 py-3 text-[15px] leading-snug" aria-live="polite">
+        <p className="mt-4 min-h-[4.5rem] rounded-xl bg-black/25 px-4 py-3 text-[15px] leading-snug sm:min-h-[4.25rem]" aria-live="polite">
           {s.prompt.slice(0, typed)}
           {phase === "typing" && <span aria-hidden className="ml-0.5 inline-block h-4 w-0.5 translate-y-0.5 animate-caret bg-signal" />}
         </p>
 
-        <dl className="mt-3 grid grid-cols-1 gap-x-4 gap-y-1.5 text-sm sm:grid-cols-2">
+        <dl className="mt-3 grid min-h-[8.5rem] grid-cols-1 content-start gap-x-4 gap-y-1.5 text-sm sm:min-h-[5.75rem] sm:grid-cols-2">
           {s.checks.map((c, i) => (
             <div
               key={c.label}

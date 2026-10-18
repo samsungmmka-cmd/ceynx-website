@@ -1,23 +1,56 @@
+"use client";
+
+import { ClipboardList, Link2, MessageCircle, Smartphone } from "lucide-react";
+import { useInView, useSteps } from "@/lib/use-animation";
+import { cn } from "@/lib/utils";
+
 const steps = [
-  { title: "Register here", body: "Tell us about your business. It takes about a minute." },
-  { title: "Get your private link", body: "We set up your workspace and email you a secure sign-in link." },
-  { title: "Connect WhatsApp", body: "Link your number through Meta's own signup window in a few clicks. No code." },
-  { title: "Start talking", body: "Import contacts, invite your team and send your first approved template." },
+  { icon: ClipboardList, title: "Register", line: "One-minute form." },
+  { icon: Link2, title: "Get your link", line: "We set up your workspace." },
+  { icon: Smartphone, title: "Connect WhatsApp", line: "A few clicks, no code." },
+  { icon: MessageCircle, title: "Start talking", line: "Send your first message." },
 ];
 
 export function HowItWorks() {
+  const { ref, inView } = useInView<HTMLOListElement>(0.4);
+  // Lights the steps one by one, holds, then starts again.
+  const step = useSteps(steps.length + 3, 800, inView);
+
   return (
-    <section className="py-24 sm:py-28">
+    <section className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">From sign-up to first message</h2>
-        <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <li key={s.title} className="relative">
-              <span className="font-display text-5xl font-bold text-signal tabular-nums">{i + 1}</span>
-              <h3 className="mt-3 text-xl font-semibold tracking-tight">{s.title}</h3>
-              <p className="mt-2 leading-relaxed text-muted-foreground">{s.body}</p>
-            </li>
-          ))}
+        <h2 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">Live in four steps</h2>
+        <ol ref={ref} className="relative mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* progress rail behind the icons on wide screens */}
+          <span aria-hidden className="absolute top-7 right-[12.5%] left-[12.5%] hidden h-0.5 bg-border lg:block" />
+          <span
+            aria-hidden
+            className="absolute top-7 left-[12.5%] hidden h-0.5 bg-signal transition-[width] duration-700 lg:block"
+            style={{ width: `${(Math.min(step, steps.length) - 1 > 0 ? (Math.min(step, steps.length) - 1) / (steps.length - 1) : 0) * 75}%` }}
+          />
+          {steps.map((s, i) => {
+            const lit = step > i;
+            return (
+              <li key={s.title} className="relative flex items-center gap-4 lg:flex-col lg:text-center">
+                <span
+                  className={cn(
+                    "relative grid size-14 shrink-0 place-items-center rounded-full border-2 transition-all duration-500",
+                    lit ? "border-signal bg-signal text-lagoon" : "border-border bg-card text-muted-foreground",
+                    step === i + 1 && "scale-110",
+                  )}
+                >
+                  <s.icon aria-hidden className="size-6" />
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold tracking-tight">
+                    <span className="sr-only">Step {i + 1}: </span>
+                    {s.title}
+                  </h3>
+                  <p className="text-muted-foreground">{s.line}</p>
+                </div>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>
