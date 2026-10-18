@@ -189,7 +189,7 @@ export function AiComposer() {
       </div>
 
       {/* Customer's phone */}
-      <div className="relative z-0 mx-auto -mt-6 w-[290px] sm:mr-0 sm:-mt-10 sm:w-[300px]">
+      <div className="relative mx-auto mt-5 w-[290px] sm:mr-6 sm:w-[300px]">
         <div className="rounded-[2.4rem] bg-[#0a1513] p-2.5 shadow-2xl shadow-black/50 ring-1 ring-white/10">
           <div className="overflow-hidden rounded-[1.9rem]">
             <div className="flex items-center gap-2 bg-teal px-3 pt-7 pb-2.5 text-white">

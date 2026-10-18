@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
-import "@fontsource-variable/bricolage-grotesque";
 import "./globals.css";
 import { isDemo, site } from "@/lib/site";
 
