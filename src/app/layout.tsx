@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
+import "@fontsource-variable/open-sans";
 import "./globals.css";
 import { isDemo, site } from "@/lib/site";
 
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en">
       <body className={isDemo ? "min-h-dvh pb-7 font-sans" : "min-h-dvh font-sans"}>
         <a
           href="#main"
