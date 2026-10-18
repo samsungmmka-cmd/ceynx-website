@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  CEYNX palette — taken from the WhatsApp world, not a generic SaaS kit.
+  lagoon   #04211D  deep teal used for the hero and footer
+  teal     #075E54  WhatsApp's classic header teal
+  signal   #25D366  WhatsApp green, used for primary actions (with dark text for contrast)
+  bubble   #D9FDD3  outgoing-message mint
+  mist     #F2F8F5  page surface
+  ink      #0F2A25  body text
+*/
+:root {
+  --radius: 0.75rem;
+  --lagoon: #04211d;
+  --teal: #075e54;
+  --signal: #25d366;
+  --bubble: #d9fdd3;
+  --tick: #53bdeb;
+
+  --background: #f2f8f5;
+  --foreground: #0f2a25;
+  --card: #ffffff;
+  --card-foreground: #0f2a25;
+  --popover: #ffffff;
+  --popover-foreground: #0f2a25;
+  --primary: #25d366;
+  --primary-foreground: #04211d;
+  --secondary: #e3f1eb;
+  --secondary-foreground: #0f2a25;
+  --muted: #e6efeb;
+  --muted-foreground: #4a645e;
+  --accent: #d9fdd3;
+  --accent-foreground: #0f2a25;
+  --destructive: #c4332b;
+  --border: #d3e3dc;
+  --input: #c6d9d1;
+  --ring: #128c7e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-lagoon: var(--lagoon);
+  --color-teal: var(--teal);
+  --color-signal: var(--signal);
+  --color-bubble: var(--bubble);
+  --color-tick: var(--tick);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", var(--font-geist-sans), ui-sans-serif, sans-serif;
+
+  --animate-caret: caret 1s steps(1) infinite;
+  --animate-pop: pop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-dot: dot 1.2s ease-in-out infinite;
+
+  @keyframes caret { 50% { opacity: 0; } }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes dot {
+    0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-2px); }
+  }
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+/* The WhatsApp chat wallpaper, drawn as a faint dot lattice instead of an image. */
+.chat-wallpaper {
+  background-color: #efeae2;
+  background-image: radial-gradient(rgba(7, 94, 84, 0.09) 1px, transparent 1.2px);
+  background-size: 14px 14px;
+}
+
+/* Hero field: green light leaking through the lagoon, like a phone screen in a dark room. */
+.lagoon-field {
+  background:
+    radial-gradient(60rem 30rem at 85% 10%, rgba(37, 211, 102, 0.22), transparent 60%),
+    radial-gradient(40rem 26rem at 0% 100%, rgba(18, 140, 126, 0.35), transparent 60%),
+    var(--lagoon);
+}
