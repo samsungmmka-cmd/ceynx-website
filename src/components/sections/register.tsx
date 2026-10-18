@@ -16,6 +16,7 @@ export function Register() {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [formError, setFormError] = useState("");
+  const [demo, setDemo] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,8 +56,9 @@ export function Register() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json().catch(() => ({}))) as { error?: string; fields?: Errors };
+      const data = (await res.json().catch(() => ({}))) as { error?: string; fields?: Errors; demo?: boolean };
       if (res.ok) {
+        setDemo(!!data.demo);
         setStatus("done");
         return;
       }
@@ -101,6 +103,11 @@ export function Register() {
               <p className="text-muted-foreground">
                 Thanks. We&apos;ll review your details and email your private workspace link within one business day.
               </p>
+              {demo && (
+                <p className="rounded-md bg-accent px-3 py-2 text-sm text-teal">
+                  Demo site: your details were checked but not sent anywhere.
+                </p>
+              )}
             </div>
           ) : (
             <form noValidate onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">

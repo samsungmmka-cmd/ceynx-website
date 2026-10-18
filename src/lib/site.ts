@@ -9,6 +9,9 @@ export const site = {
   email: "hello@ceynx.com",
 };
 
+// Demo mode: registrations are validated but not delivered, a banner is shown, and search engines are blocked.
+export const isDemo = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
 export const nav = [
   { href: "#product", label: "Product" },
   { href: "#ai", label: "AI" },

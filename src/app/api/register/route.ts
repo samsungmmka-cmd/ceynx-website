@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { registerSchema } from "@/lib/register-schema";
-import { site } from "@/lib/site";
+import { isDemo, site } from "@/lib/site";
 
 // Registration endpoint. It validates the request, filters bots and forwards the lead
 // to LEAD_WEBHOOK_URL. Nothing is stored on this site, so there's no database to protect.
@@ -73,6 +73,12 @@ export async function POST(req: NextRequest) {
 
   const lead = parsed.data;
   if (lead.elapsedMs < MIN_FILL_MS) return json(200, { ok: true });
+
+  if (isDemo) {
+    // Mock delivery: nothing leaves the server and nothing personal is logged.
+    console.info("[register] Demo mode: registration validated, not delivered.");
+    return json(200, { ok: true, demo: true });
+  }
 
   const webhook = process.env.LEAD_WEBHOOK_URL;
   if (!webhook) {
