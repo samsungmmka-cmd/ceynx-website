@@ -1,23 +1,36 @@
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 
-// A speech bubble whose tail is a spark: messaging with intelligence inside.
-export function LogoMark({ className }: { className?: string }) {
+/** Brand mark: hexagonal node, echoing the globe and 3D cube motifs. */
+export function LogoMark({ className = "size-8" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden className={cn("size-8", className)}>
-      <path
-        d="M16 3C8.8 3 3 8.4 3 15.1c0 2.4.8 4.7 2.1 6.6L4 28.5l7-2.2c1.5.6 3.2.9 5 .9 7.2 0 13-5.4 13-12.1S23.2 3 16 3Z"
-        fill="#25D366"
-      />
-      <path d="M16.6 8.5 14 15h3.6l-2.2 8.5 6.2-9.3h-3.8l2.6-5.7h-3.8Z" fill="#04211D" />
+    <svg viewBox="0 0 32 32" className={className} aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="ceynx-mark" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" style={{ stopColor: "var(--c-mint)" }} />
+          <stop offset="0.55" style={{ stopColor: "var(--c-emerald)" }} />
+          <stop offset="1" style={{ stopColor: "var(--c-mint)" }} />
+        </linearGradient>
+      </defs>
+      <path d="M16 2.5 27.7 9.25v13.5L16 29.5 4.3 22.75V9.25z" fill="none" stroke="url(#ceynx-mark)" strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="M10.5 11.5 21.5 20.5M21.5 11.5 10.5 20.5" stroke="url(#ceynx-mark)" strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="16" cy="16" r="2.4" style={{ fill: "#ffffff" }} />
     </svg>
   );
 }
 
-export function Logo({ className, light = false }: { className?: string; light?: boolean }) {
+export function Wordmark({ className = "" }: { className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <LogoMark />
-      <span className={cn("font-display text-xl font-bold tracking-[0.04em]", light ? "text-white" : "text-lagoon")}>CEYNX</span>
+    <span className={`font-extrabold tracking-[0.14em] text-ink ${className}`}>
+      CEYN<span className="text-mint">X</span>
     </span>
+  );
+}
+
+export function Logo({ className = "" }: { className?: string }) {
+  return (
+    <Link href="/" className={`inline-flex items-center gap-2.5 ${className}`} aria-label="CEYNX home">
+      <LogoMark />
+      <Wordmark className="text-xl" />
+    </Link>
   );
 }

@@ -1,23 +1,19 @@
-import Link from "next/link";
-import { Logo } from "@/components/logo";
-import { SiteFooter } from "@/components/site-footer";
+import type { ReactNode } from "react";
+import { PageHero } from "./ui";
 
-export function LegalPage({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) {
+/**
+ * TODO(CEYNX): these policies are starting templates. Have them reviewed by legal counsel for the
+ * jurisdictions you operate in (e.g. UAE PDPL, GDPR for EU visitors) before launch.
+ */
+export function LegalPage({ title, path, updated, children }: { title: string; path: string; updated: string; children: ReactNode }) {
   return (
     <>
-      <header className="bg-lagoon">
-        <div className="mx-auto flex h-16 max-w-3xl items-center px-4 sm:px-6">
-          <Link href="/" aria-label="CEYNX home"><Logo light /></Link>
+      <PageHero eyebrow="Legal" title={title} intro={<>Last updated: <time dateTime={updated}>{new Date(updated).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</time></>} crumbs={[{ label: title, href: path }]} />
+      <section className="section pt-12">
+        <div className="container-site">
+          <div className="prose-legal max-w-3xl">{children}</div>
         </div>
-      </header>
-      <main id="main" tabIndex={-1} className="mx-auto outline-none max-w-3xl px-4 py-16 sm:px-6">
-        <h1 className="text-4xl font-bold tracking-tight">{title}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Last updated {updated}</p>
-        <div className="mt-10 space-y-6 leading-relaxed [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-semibold [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6">
-          {children}
-        </div>
-      </main>
-      <SiteFooter />
+      </section>
     </>
   );
 }

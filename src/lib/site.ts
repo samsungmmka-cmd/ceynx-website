@@ -1,23 +1,40 @@
-// Central place for brand facts. Change these before launch.
+/**
+ * Single source of truth for company details.
+ * Empty strings are hidden on the site, so nothing unconfirmed is shown publicly.
+ * TODO(CEYNX): confirm domain, email, phone, WhatsApp number and address before launch.
+ */
 export const site = {
   name: "CEYNX",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
-  tagline: "AI-ready WhatsApp messaging for teams that sell and support",
+  legalName: "CEYNX",
+  tagline: "Intelligence that connects.",
   description:
-    "CEYNX gives your team one WhatsApp inbox, consent-safe campaigns, automations and WhatsApp Flows on the official WhatsApp Business Platform, with AI assistance built into the workflow.",
-  // GO-LIVE: replace with your real contact address.
-  email: "hello@ceynx.com",
-};
+    "CEYNX builds AI agents, automation and custom software, plus SaaS platforms for WhatsApp messaging, document AI, voice agents and 3D learning.",
+  oneLiner:
+    "CEYNX delivers SaaS platforms, AI agents and custom software that automate your operations and connect you with your customers.",
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceynx.com").replace(/\/$/, ""),
+  locale: "en",
+  contact: {
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@ceynx.com",
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "",
+    /** International format, digits only, e.g. 9715XXXXXXXX. Enables the WhatsApp buttons. */
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
+    address: process.env.NEXT_PUBLIC_CONTACT_ADDRESS ?? "",
+    /** Cal.com or Calendly link. Enables the "Book a call" button. */
+    bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL ?? "",
+  },
+  social: {
+    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "",
+    facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL ?? "",
+    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "",
+    x: process.env.NEXT_PUBLIC_X_URL ?? "",
+  },
+} as const;
 
-// Demo mode: registrations are validated but not delivered, a banner is shown, and search engines are blocked.
-export const isDemo = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+export function whatsappLink(text = "Hello CEYNX, I'd like to learn more about your solutions.") {
+  if (!site.contact.whatsapp) return null;
+  return `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(text)}`;
+}
 
-export const nav = [
-  { href: "#product", label: "Product" },
-  { href: "#ai", label: "AI" },
-  { href: "#guardrails", label: "Guardrails" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
-];
+export function absoluteUrl(path = "/") {
+  return `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
+}

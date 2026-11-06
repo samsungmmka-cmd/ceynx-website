@@ -1,47 +1,102 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/open-sans";
+import { Inter } from "next/font/google";
+import { Footer, WhatsAppButton } from "@/components/footer";
+import { Header } from "@/components/header";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { JsonLd } from "@/components/ui";
+import { absoluteUrl, site } from "@/lib/site";
+import { themeScript } from "@/lib/theme";
 import "./globals.css";
-import { isDemo, site } from "@/lib/site";
+
+// Downloaded at build time and self-hosted by Next.js: no request to Google from visitors.
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: `${site.name} | ${site.tagline}`, template: `%s | ${site.name}` },
+  title: {
+    default: `${site.name} — SaaS Platforms, AI Agents & Custom Software`,
+    template: `%s | ${site.name}`,
+  },
   description: site.description,
   applicationName: site.name,
-  alternates: { canonical: "/" },
+  keywords: [
+    "AI agents",
+    "SaaS platforms",
+    "AI automation",
+    "custom software development",
+    "WhatsApp business messaging platform",
+    "AI document analysis",
+    "AI voice agent",
+    "3D learning platform",
+  ],
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} | ${site.tagline}`,
-    description: site.description,
+    locale: "en_US",
     url: "/",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
   },
-  twitter: { card: "summary", title: site.name, description: site.description },
-  robots: isDemo ? { index: false, follow: false } : { index: true, follow: true },
+  twitter: { card: "summary_large_image", title: `${site.name} — ${site.tagline}`, description: site.description },
+  robots: { index: true, follow: true },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04211D",
+  themeColor: "#ffffff",
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <body className={isDemo ? "min-h-dvh pb-7 font-sans" : "min-h-dvh font-sans"}>
+    <html lang={site.locale} className={inter.variable} data-theme="light" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="bg-atmosphere flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-mint focus:px-5 focus:py-3 focus:font-semibold focus:text-on-brand"
         >
           Skip to content
         </a>
-        {isDemo && (
-          <p className="fixed inset-x-0 bottom-0 z-50 bg-signal px-4 py-1.5 text-center text-xs font-medium text-lagoon">
-            Demo site for testing. Registrations are not sent anywhere.
-          </p>
-        )}
-        {children}
+        <ScrollToTop />
+        <Header />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+        <WhatsAppButton />
+        <JsonLd
+          data={[
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": absoluteUrl("/#organization"),
+              name: site.name,
+              url: site.url,
+              logo: absoluteUrl("/icon.svg"),
+              slogan: site.tagline,
+              description: site.oneLiner,
+              email: site.contact.email || undefined,
+              telephone: site.contact.phone || undefined,
+              sameAs: Object.values(site.social).filter(Boolean),
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: site.name,
+              url: site.url,
+              publisher: { "@id": absoluteUrl("/#organization") },
+            },
+          ]}
+        />
       </body>
     </html>
   );
