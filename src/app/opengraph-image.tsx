@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og";
+import { LOGO_RATIO, logoSvg } from "@/content/logo-geometry";
 import { site } from "@/lib/site";
+
+const logoSrc = `data:image/svg+xml;base64,${Buffer.from(logoSvg({ green: "#00e676", ink: "#ffffff", dot: "#ffffff" })).toString("base64")}`;
 
 export const alt = `${site.name} — ${site.tagline} SaaS platforms, AI agents and custom software.`;
 export const size = { width: 1200, height: 630 };
@@ -22,9 +25,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", fontSize: 24, letterSpacing: 8, color: "#00e676", fontWeight: 400 }}>SAAS · AI AGENTS · CUSTOM SOFTWARE</div>
-        <div style={{ display: "flex", marginTop: 24, fontSize: 150, fontWeight: 800, letterSpacing: 14, color: "#ffffff" }}>
-          CEYN<span style={{ color: "#00e676" }}>X</span>
-        </div>
+        <img src={logoSrc} alt="CEYNX"width={Math.round(120 * LOGO_RATIO)} height={120} style={{ marginTop: 36, marginBottom: 36 }} />
         <div style={{ display: "flex", fontSize: 54, fontWeight: 400 }}>
           Intelligence that&nbsp;<span style={{ color: "#00e676", fontWeight: 800 }}>connects.</span>
         </div>

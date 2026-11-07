@@ -36,6 +36,9 @@
   --c-bubble-out: #e8e8e8;
   --c-paper: #ffffff;
   --c-paper-ink: #171717;
+  /* Logo colours (logos are exempt from text-contrast rules; brand green) */
+  --c-logo: #00a152;
+  --c-logo-dot: #00a152;
 }
 
 [data-theme="dark"] {
@@ -72,6 +75,8 @@
   --c-bubble-out: #2e2e2e;
   --c-paper: #fafafa;
   --c-paper-ink: #171717;
+  --c-logo: #00e676;
+  --c-logo-dot: #ffffff;
 }
 
 /* ---------- Design tokens exposed to Tailwind ---------- */
