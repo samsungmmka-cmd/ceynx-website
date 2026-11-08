@@ -51,8 +51,14 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // One canonical domain for search engines: ceynx.com → www.ceynx.com (308 permanent)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "ceynx.com" }],
+        destination: "https://www.ceynx.com/:path*",
+        permanent: true,
+      },
       { source: "/solutions", destination: "/solutions/ai-agents", permanent: false },
-      { source: "/blog", destination: "/insights", permanent: true },
     ];
   },
 };

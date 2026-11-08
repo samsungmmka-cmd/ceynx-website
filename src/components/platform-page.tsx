@@ -206,7 +206,7 @@ export function PlatformPage({ slug }: { slug: Platform["slug"] }) {
             operatingSystem: "Web",
             description: p.summary,
             url: absoluteUrl(path),
-            provider: { "@type": "Organization", name: site.name, url: site.url },
+            provider: { "@type": "Organization", "@id": absoluteUrl("/#organization"), name: site.name, url: site.url },
           },
           {
             "@context": "https://schema.org",
