@@ -1,23 +1,59 @@
-import { cn } from "@/lib/utils";
+import Link from "next/link";
+import {
+  LETTERS,
+  LOGO_RATIO,
+  LOGO_VIEWBOX,
+  MARK,
+  MARK_TRANSFORM,
+  SIGNATURE_X,
+  SIGNATURE_X_STROKE,
+  WORD_TRANSFORM,
+} from "@/content/logo-geometry";
 
-// A speech bubble whose tail is a spark: messaging with intelligence inside.
-export function LogoMark({ className }: { className?: string }) {
+/**
+ * Brand mark: hexagonal node with a crossed X.
+ * Colours come from theme tokens: --c-logo (green) and --c-logo-dot (centre node).
+ */
+export function LogoMark({ className = "size-8" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden className={cn("size-8", className)}>
-      <path
-        d="M16 3C8.8 3 3 8.4 3 15.1c0 2.4.8 4.7 2.1 6.6L4 28.5l7-2.2c1.5.6 3.2.9 5 .9 7.2 0 13-5.4 13-12.1S23.2 3 16 3Z"
-        fill="#25D366"
-      />
-      <path d="M16.6 8.5 14 15h3.6l-2.2 8.5 6.2-9.3h-3.8l2.6-5.7h-3.8Z" fill="#04211D" />
+    <svg viewBox="0 0 32 32" className={className} aria-hidden="true" focusable="false">
+      <path d={MARK.hex} fill="none" style={{ stroke: "var(--c-logo)" }} strokeWidth={MARK.hexStroke} strokeLinejoin="round" />
+      <path d={MARK.x} fill="none" style={{ stroke: "var(--c-logo)" }} strokeWidth={MARK.xStroke} strokeLinecap="round" />
+      <circle cx="16" cy="16" r={MARK.dot} style={{ fill: "var(--c-logo-dot)" }} />
     </svg>
   );
 }
 
-export function Logo({ className, light = false }: { className?: string; light?: boolean }) {
+/**
+ * Full horizontal logo: mark + "CEYN" (Sora ExtraBold, outlined) + signature X.
+ * Letters use currentColor, so they follow the text colour of the theme.
+ */
+export function LogoFull({ className = "h-8" }: { className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <LogoMark />
-      <span className={cn("font-display text-xl font-bold tracking-[0.04em]", light ? "text-white" : "text-lagoon")}>CEYNX</span>
-    </span>
+    <svg
+      viewBox={LOGO_VIEWBOX}
+      className={`w-auto text-ink ${className}`}
+      style={{ aspectRatio: LOGO_RATIO }}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g transform={MARK_TRANSFORM}>
+        <path d={MARK.hex} fill="none" style={{ stroke: "var(--c-logo)" }} strokeWidth={MARK.hexStroke} strokeLinejoin="round" />
+        <path d={MARK.x} fill="none" style={{ stroke: "var(--c-logo)" }} strokeWidth={MARK.xStroke} strokeLinecap="round" />
+        <circle cx="16" cy="16" r={MARK.dot} style={{ fill: "var(--c-logo-dot)" }} />
+      </g>
+      <g transform={WORD_TRANSFORM}>
+        <path d={LETTERS} fill="currentColor" />
+        <path d={SIGNATURE_X} fill="none" style={{ stroke: "var(--c-logo)" }} strokeWidth={SIGNATURE_X_STROKE} strokeLinecap="round" />
+      </g>
+    </svg>
+  );
+}
+
+export function Logo({ className = "" }: { className?: string }) {
+  return (
+    <Link href="/" className={`inline-flex items-center ${className}`} aria-label="CEYNX home">
+      <LogoFull className="h-7 sm:h-8" />
+    </Link>
   );
 }

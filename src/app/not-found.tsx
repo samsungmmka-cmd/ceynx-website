@@ -1,15 +1,18 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/icon";
 
 export default function NotFound() {
   return (
-    <main id="main" className="lagoon-field grid min-h-dvh place-items-center px-4 text-center text-white">
-      <div>
-        <p className="font-display text-7xl font-bold text-signal">404</p>
-        <h1 className="mt-4 text-3xl font-bold">This page doesn&apos;t exist</h1>
-        <p className="mt-3 text-white/70">The link may be old or mistyped.</p>
-        <Button className="mt-8" asChild><Link href="/">Go to the home page</Link></Button>
+    <section className="section">
+      <div className="container-site max-w-2xl text-center">
+        <p className="eyebrow justify-center">Error 404</p>
+        <h1 className="mt-5 text-4xl font-extrabold text-ink sm:text-5xl">This page took a different orbit</h1>
+        <p className="mt-5 text-lg text-muted">The page you&apos;re looking for doesn&apos;t exist or has moved.</p>
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <Link href="/" className="btn btn-primary">Back to home <Icon name="arrow" className="size-4" /></Link>
+          <Link href="/contact" className="btn btn-secondary">Contact us</Link>
+        </div>
       </div>
-    </main>
+    </section>
   );
 }

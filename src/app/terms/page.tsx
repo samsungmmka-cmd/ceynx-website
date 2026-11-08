@@ -1,28 +1,25 @@
-import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Terms of service", alternates: { canonical: "/terms" } };
+export const metadata = pageMetadata({ title: "Terms of Service", description: "Terms that apply to use of the CEYNX website.", path: "/terms" });
 
-// GO-LIVE: replace with terms reviewed by your lawyer.
-export default function Terms() {
+export default function TermsPage() {
   return (
-    <LegalPage title="Terms of service" updated="18 October 2026">
-      <p>These terms cover your use of this website. Use of the CEYNX platform is governed by the customer agreement you accept when your workspace is created.</p>
-      <h2>Registration</h2>
-      <p>Registering doesn&apos;t create an account or a contract. We may accept or decline registrations, for example when a use case doesn&apos;t meet WhatsApp&apos;s Business and Commerce policies.</p>
-      <h2>Acceptable use</h2>
-      <ul>
-        <li>Give accurate information about yourself and your business.</li>
-        <li>Don&apos;t try to disrupt, probe or overload the website.</li>
-        <li>Don&apos;t submit someone else&apos;s details without their permission.</li>
-      </ul>
-      <h2>Features in early access</h2>
-      <p>Features described as early access, including CEYNX AI, may change, be limited to some workspaces, or be released later than planned.</p>
-      <h2>Trademarks</h2>
-      <p>WhatsApp and Meta are trademarks of their owners. CEYNX is not affiliated with or endorsed by Meta.</p>
+    <LegalPage title="Terms of Service" path="/terms" updated="2026-11-06">
+      <p>These terms apply to your use of this website. Use of CEYNX SaaS platforms and custom development services is governed by the separate agreement you sign with us.</p>
+      <h2>Use of the website</h2>
+      <p>You may browse and use this website for lawful purposes. You must not attempt to disrupt it, gain unauthorised access, or submit false or harmful information through its forms.</p>
+      <h2>Content</h2>
+      <p>The text, design, graphics and trademarks on this website belong to {site.legalName} unless stated otherwise. Product descriptions are for general information and may change; features and pricing are confirmed in your agreement.</p>
+      <h2>Third-party names</h2>
+      <p>WhatsApp is a trademark of its respective owner. CEYNX Connect works with the WhatsApp Business Platform and is not affiliated with or endorsed by WhatsApp.</p>
+      <h2>Liability</h2>
+      <p>The website is provided &quot;as is&quot;. To the extent permitted by law, we are not liable for losses arising from reliance on its content.</p>
+      <h2>Changes</h2>
+      <p>We may update these terms. The date at the top of this page shows the latest version.</p>
       <h2>Contact</h2>
-      <p><a className="text-teal underline" href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p>Questions about these terms can be sent to <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.</p>
     </LegalPage>
   );
 }
