@@ -4,12 +4,13 @@ import { processSteps } from "@/content/company";
 import { caseStudies } from "@/content/editorial";
 import { engagementModels, getSolution, solutions, techStack, type Solution } from "@/content/solutions";
 import { pageMetadata } from "@/lib/metadata";
+import { absoluteUrl, site } from "@/lib/site";
 import { CaseStudyCard } from "./case-study-card";
 import { Icon } from "./icon";
 import { LeadForm } from "./lead-form";
 import { AgentFlow } from "./visuals/agent-flow";
 import { DashboardMockup } from "./visuals/dashboard-mockup";
-import { CheckList, FeatureCard, PageHero, ProcessStepper, SectionHeading } from "./ui";
+import { CheckList, FeatureCard, JsonLd, PageHero, ProcessStepper, SectionHeading } from "./ui";
 
 export function solutionMetadata(slug: Solution["slug"]): Metadata {
   const s = getSolution(slug);
@@ -117,6 +118,26 @@ export function SolutionPage({ slug }: { slug: Solution["slug"] }) {
           </div>
         </div>
       </section>
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: s.name,
+          serviceType: s.name,
+          description: s.seo.description,
+          url: absoluteUrl(`/solutions/${s.slug}`),
+          provider: { "@type": "Organization", "@id": absoluteUrl("/#organization"), name: site.name, url: site.url },
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: s.name,
+            itemListElement: s.services.map((sv) => ({
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: sv.title, description: sv.text },
+            })),
+          },
+        }}
+      />
     </>
   );
 }

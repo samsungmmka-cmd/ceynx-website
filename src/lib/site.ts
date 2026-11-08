@@ -1,7 +1,7 @@
 /**
  * Single source of truth for company details.
  * Empty strings are hidden on the site, so nothing unconfirmed is shown publicly.
- * TODO(CEYNX): confirm domain, email, phone, WhatsApp number and address before launch.
+ * Domain and email confirmed (Nov 2026). TODO(CEYNX): phone, WhatsApp number and address.
  */
 export const site = {
   name: "CEYNX",
@@ -14,7 +14,7 @@ export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceynx.com").replace(/\/$/, ""),
   locale: "en",
   contact: {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@ceynx.com",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@ceynx.com",
     phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "",
     /** International format, digits only, e.g. 9715XXXXXXXX. Enables the WhatsApp buttons. */
     whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",

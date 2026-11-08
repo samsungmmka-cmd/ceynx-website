@@ -42,8 +42,15 @@ export const metadata: Metadata = {
     description: site.description,
   },
   twitter: { card: "summary_large_image", title: `${site.name} — ${site.tagline}`, description: site.description },
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   formatDetection: { telephone: false },
+  // Search engine ownership checks (optional; DNS verification works too).
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+      : undefined,
+  },
 };
 
 export const viewport: Viewport = {
@@ -81,18 +88,34 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               "@id": absoluteUrl("/#organization"),
               name: site.name,
               url: site.url,
-              logo: absoluteUrl("/icon.svg"),
+              logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png"), width: 512, height: 512 },
               slogan: site.tagline,
               description: site.oneLiner,
               email: site.contact.email || undefined,
               telephone: site.contact.phone || undefined,
+              contactPoint: site.contact.email
+                ? [{ "@type": "ContactPoint", contactType: "sales", email: site.contact.email, availableLanguage: ["English"] }]
+                : undefined,
+              knowsAbout: [
+                "Applied artificial intelligence",
+                "AI agents",
+                "Business process automation",
+                "WhatsApp Business messaging",
+                "Document AI and OCR",
+                "AI voice agents",
+                "3D learning platforms",
+                "Custom software development",
+                "SaaS platforms",
+              ],
               sameAs: Object.values(site.social).filter(Boolean),
             },
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
+              "@id": absoluteUrl("/#website"),
               name: site.name,
               url: site.url,
+              inLanguage: "en",
               publisher: { "@id": absoluteUrl("/#organization") },
             },
           ]}
